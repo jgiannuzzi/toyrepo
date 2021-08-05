@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: cuda-${{ github.run_id }}
     steps:
       - name: Display context
         run: |
