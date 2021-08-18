@@ -1,0 +1,36 @@
+name: Update pages
+
+on:
+  workflow_dispatch:
+    inputs:
+      repository:
+        description: source repository (e.g. `org/name`)
+        required: true
+      ref:
+        description: source branch/tag/commit
+        required: true
+
+jobs:
+  update-pages:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout pages
+        uses: actions/checkout@v2
+        with:
+          path: pages
+      - name: Checkout ${{ github.event.inputs.repository }}@${{ github.event.inputs.ref }}
+        uses: actions/checkout@v2
+        with:
+          repository: ${{ github.event.inputs.repository }}
+          ref: ${{ github.event.inputs.ref }}
+          path: source
+      - name: Copy things over
+        run: rsync -av source/* pages/
+      - name: Push to pages
+        working-directory: pages
+        run: |
+          git config user.email 'charts@gresearch.co.uk'
+          git config user.name 'G-Research Charts'
+          git add -A
+          git commit -m 'Update pages'
+          git push
