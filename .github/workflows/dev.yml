@@ -1,0 +1,16 @@
+name: Dev
+
+on:
+  workflow_dispatch:
+    inputs:
+      os:
+        description: Runner operating system
+        required: true
+        default: 'ubuntu-latest'
+
+jobs:
+  dev:
+    runs-on: ${{ github.event.inputs.os }}
+    steps:
+      - name: connect with tmate
+        uses: mxschmitt/action-tmate@v3
