@@ -1,0 +1,21 @@
+name: Check empty step inputs
+
+on:
+  workflow_dispatch:
+    inputs:
+      condition:
+        description: Condition
+        required: true
+        default: "true"
+
+jobs:
+  dev:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set environment variables
+        if: github.event.inputs.condition == 'true'
+        id: env
+        run: echo '::set-output name=json::{"ILGPU_CLEAN_TESTS":"true","ILGPU_TEST_PARALLELIZATION_LEVEL":"1"}'
+      - name: Use environment variables
+        run: env
+        env: ${{ fromJson(steps.env.outputs.json) }}
