@@ -13,9 +13,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set environment variables
-        if: github.event.inputs.condition == 'true'
         id: env
-        run: echo '::set-output name=json::{"ILGPU_CLEAN_TESTS":"true","ILGPU_TEST_PARALLELIZATION_LEVEL":"1"}'
+        run: |
+          if [ ${{github.event.inputs.condition}} == "true" ]; then
+            env='{"ILGPU_CLEAN_TESTS":"true","ILGPU_TEST_PARALLELIZATION_LEVEL":"1"}'
+          else
+            env='{}'
+          fi
+          echo ::set-output name=json::$env
       - name: Use environment variables
         run: env
         env: ${{ fromJson(steps.env.outputs.json) }}
