@@ -1,0 +1,21 @@
+name: App
+
+on:
+  workflow_dispatch:
+
+jobs:
+  app:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v6
+        env:
+          APP_ID: ${{ secrets.APP_ID }}
+          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
+        with:
+          script: |
+            import { App } from "octokit";
+            
+            const app = new App({
+              appId: Number(process.env.APP_ID),
+              privateKey: String(process.env.APP_PRIVATE_KEY),
+            });
