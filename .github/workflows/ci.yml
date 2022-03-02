@@ -16,8 +16,6 @@ jobs:
 
   trigger:
     runs-on: ubuntu-latest
-    permissions:
-      actions: write
     steps:
       - name: Call workflow
         run: gh workflow run check-empty.yml --repo ${{ github.repository }} --ref main -f condition=true
