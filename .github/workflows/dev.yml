@@ -12,7 +12,9 @@ jobs:
   dev:
     runs-on: ${{ github.event.inputs.os }}
     steps:
-      - name: connect with tmate
-        uses: mxschmitt/action-tmate@v3
+      - name: connect with upterm
+        uses: lhotari/action-upterm@v1
+        with:
+          limit-access-to-users: jgiannuzzi
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
