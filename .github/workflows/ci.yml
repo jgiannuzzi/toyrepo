@@ -13,3 +13,13 @@ jobs:
           cat << EOF
           ${{ toJSON(github) }}
           EOF
+
+  trigger:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: write
+    steps:
+      - name: Call workflow
+        run: gh workflow run check-empty.yml --repo ${{ github.repository }} --ref main -f condition=true
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
