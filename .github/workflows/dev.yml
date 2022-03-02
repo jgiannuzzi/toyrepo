@@ -17,4 +17,4 @@ jobs:
         with:
           limit-access-to-users: jgiannuzzi
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN_TEMP: ${{ secrets.GITHUB_TOKEN }}
