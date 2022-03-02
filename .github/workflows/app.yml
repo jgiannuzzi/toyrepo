@@ -13,9 +13,9 @@ jobs:
           APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
         with:
           script: |
-            import { App } from "octokit";
+            const octokit = require('octokit')
             
-            const app = new App({
-              appId: Number(process.env.APP_ID),
-              privateKey: String(process.env.APP_PRIVATE_KEY),
-            });
+            const app = new octokit.App({
+              appId: process.env.APP_ID,
+              privateKey: process.env.APP_PRIVATE_KEY,
+            })
