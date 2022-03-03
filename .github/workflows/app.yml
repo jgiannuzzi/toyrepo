@@ -7,15 +7,16 @@ jobs:
   app:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/github-script@v6
+      - uses: actions/checkout@v2
+      - name: try to commit and push something to a branch
         env:
-          APP_ID: ${{ secrets.APP_ID }}
-          APP_PRIVATE_KEY: ${{ secrets.APP_PRIVATE_KEY }}
-        with:
-          script: |
-            const octokit = require('octokit')
-            
-            const app = new octokit.App({
-              appId: process.env.APP_ID,
-              privateKey: process.env.APP_PRIVATE_KEY,
-            })
+          GITHUB_TOKEN: ${{ github.token }}
+        run: |
+          git config user.name 'Timestamper'
+          git config user.email 'timestamper@gr-oss.io'
+          git checkout gh-pages
+          date=$(date)
+          echo $date > date.txt
+          git add date.txt
+          git commit -m "Update date to $date"
+          git push
