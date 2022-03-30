@@ -13,10 +13,8 @@ jobs:
           cat << EOF
           ${{ toJSON(github) }}
           EOF
-      - name: Display context env vars
-        run: |
-          cat << EOF
-          ${{ toJSON(env) }}
-          EOF
-      - name: Check var
-        run: "echo VCPKG_INSTALLATION_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}"
+      - name: Upload artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: test
+          path: ${{ env.VCPKG_INSTALLATION_ROOT }}/bootstrap-vcpkg.sh
