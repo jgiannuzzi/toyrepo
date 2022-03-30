@@ -13,3 +13,5 @@ jobs:
           cat << EOF
           ${{ toJSON(github) }}
           EOF
+      - name: Check var
+        run: "echo VCPKG_INSTALLATION_ROOT: ${{ env.VCPKG_INSTALLATION_ROOT }}"
