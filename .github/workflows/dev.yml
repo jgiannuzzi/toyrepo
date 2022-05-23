@@ -10,11 +10,15 @@ on:
 
 jobs:
   dev:
-    container: centos:7
     runs-on: ${{ github.event.inputs.os }}
     steps:
-      - name: Install prerequisites
-        run: yum install -y sudo
+      - name: Start CentOS container
+        run: docker run --name centos --entrypoint tail -v $PWD:$PWD -w $PWD centos:7 -f /dev/null
+      - name: Install cmake in container
+        run: |
+          docker exec centos yum install -y centos-release-scl epel-release
+          docker exec yum install -y devtoolset-7 rh-git227 openssl-devel flex bison cmake3
+          docker exec ln -s cmake3 /usr/bin/cmake
       - name: connect with upterm
         uses: lhotari/action-upterm@v1
         with:
