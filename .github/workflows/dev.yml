@@ -16,9 +16,9 @@ jobs:
         run: docker run -d --name centos --entrypoint tail -v $PWD:$PWD -w $PWD centos:7 -f /dev/null
       - name: Install cmake in container
         run: |
-          docker exec centos yum install -y centos-release-scl epel-release
-          docker exec yum install -y devtoolset-7 rh-git227 openssl-devel flex bison cmake3
-          docker exec ln -s cmake3 /usr/bin/cmake
+          docker exec centos bash -c "yum install -y centos-release-scl epel-release && \
+                                      yum install -y devtoolset-7 rh-git227 openssl-devel flex bison cmake3 && \
+                                      ln -s cmake3 /usr/bin/cmake"
       - name: connect with upterm
         uses: lhotari/action-upterm@v1
         with:
