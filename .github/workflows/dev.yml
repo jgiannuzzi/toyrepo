@@ -10,6 +10,7 @@ on:
 
 jobs:
   dev:
+    container: centos:7
     runs-on: ${{ github.event.inputs.os }}
     steps:
       - name: connect with upterm
