@@ -13,6 +13,8 @@ jobs:
     container: centos:7
     runs-on: ${{ github.event.inputs.os }}
     steps:
+      - name: Install prerequisites
+        run: yum install -y sudo
       - name: connect with upterm
         uses: lhotari/action-upterm@v1
         with:
