@@ -13,7 +13,7 @@ jobs:
     runs-on: ${{ github.event.inputs.os }}
     steps:
       - name: Start CentOS container
-        run: docker run --name centos --entrypoint tail -v $PWD:$PWD -w $PWD centos:7 -f /dev/null
+        run: docker run -d --name centos --entrypoint tail -v $PWD:$PWD -w $PWD centos:7 -f /dev/null
       - name: Install cmake in container
         run: |
           docker exec centos yum install -y centos-release-scl epel-release
