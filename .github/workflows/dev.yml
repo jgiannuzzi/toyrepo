@@ -12,6 +12,12 @@ jobs:
   dev:
     runs-on: ${{ github.event.inputs.os }}
     steps:
+      - uses: actions/setup-go@v4
+        with:
+          go-version: "1.20"
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
       - name: connect with upterm
         uses: lhotari/action-upterm@v1
         with:
