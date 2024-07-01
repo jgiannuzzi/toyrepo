@@ -12,16 +12,7 @@ jobs:
   dev:
     runs-on: ${{ github.event.inputs.os }}
     steps:
-      - name: Start CentOS container
-        run: docker run -d --name centos --entrypoint tail -v $PWD:$PWD -w $PWD centos:7 -f /dev/null
-      - name: Install cmake in container
-        run: |
-          docker exec centos bash -c "yum install -y centos-release-scl epel-release && \
-                                      yum install -y devtoolset-7 rh-git227 openssl-devel flex bison cmake3 && \
-                                      ln -s cmake3 /usr/bin/cmake"
-      - name: connect with upterm
-        uses: lhotari/action-upterm@v1
+      - name: Setup tmate session
+        uses: mxschmitt/action-tmate@v3
         with:
-          limit-access-to-users: jgiannuzzi
-        env:
-          GITHUB_TOKEN_TEMP: ${{ secrets.GITHUB_TOKEN }}
+          limit-access-to-actor: true
