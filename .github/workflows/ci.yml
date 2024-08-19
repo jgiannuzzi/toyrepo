@@ -5,16 +5,24 @@ on:
   pull_request:
 
 jobs:
-  build:
-    runs-on: self-hosted
+  a:
+    runs-on: ubuntu-latest
     steps:
-      - name: Display context
-        run: |
-          cat << EOF
-          ${{ toJSON(github) }}
-          EOF
-      - name: Upload artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: test
-          path: ${{ env.VCPKG_INSTALLATION_ROOT }}/bootstrap-vcpkg.sh
+      - run: echo "job a"
+
+  b:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "job b"
+
+  c:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "job c" && exit 1
+
+  all-required-checks-complete:
+    needs: [a, b, c]
+    if: ${{ always() }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: crazy-max/ghaction-dump-context@v2
