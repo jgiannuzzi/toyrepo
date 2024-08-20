@@ -30,3 +30,7 @@ jobs:
           cat << EOF
           ${{ toJSON(needs) }}
           EOF
+      - name: Dump what's available
+        run: |
+          env
+          cat $GITHUB_EVENT_PATH
